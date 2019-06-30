@@ -4,6 +4,8 @@ go 1.12
 
 require (
 	github.com/gin-gonic/gin v1.4.0
+	github.com/graphql-go/graphql v0.7.8
+	github.com/graphql-go/handler v0.2.3
 	github.com/jinzhu/gorm v1.9.10
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/sirupsen/logrus v1.2.0

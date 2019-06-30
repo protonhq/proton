@@ -19,5 +19,8 @@ func NewRouter() *gin.Engine {
 			"message": "pong",
 		})
 	})
+
+	router.POST("/graphql", GraphqlHandler())
+	router.GET("/graphql", GraphqlHandler())
 	return router
 }
