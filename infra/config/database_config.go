@@ -1,24 +1,27 @@
 package config
 
-import "strings"
-
+import (
+	"strconv"
+	"strings"
+)
 // DatabaseConfiguration - Database Configuration
 type DatabaseConfiguration struct {
 	Host         string
-	Port         string
+	Port         int
 	User         string
 	Password     string
 	DatabaseName string
 }
 
 // ConnectionString - Database Connection String
-func (c DatabaseConfiguration) ConnectionString string {
+func (c *DatabaseConfiguration) ConnectionString() string {
 	strs := []string{
 		"host=" + c.Host,
-		"port=" + c.Port,
+		"port=" + strconv.Itoa(c.Port),
 		"user=" + c.User,
 		"password=" + c.Password,
 		"dbname=" + c.DatabaseName,
 	}
-	return strings.Join(strs, " ")
+	result := strings.Join(strs, " ")
+	return result
 }

@@ -1,7 +1,12 @@
 package http
 
+import "fmt"
+
 // Init - Initalize HTTP Server
-func Init() {
+func Init(port int) {
 	r := NewRouter()
-	r.Run(":8080")
+
+	portStr := fmt.Sprintf(":%d", port)
+
+	r.Run(portStr)
 }

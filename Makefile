@@ -1,2 +1,4 @@
+.PHONY: build
+
 build:
-	@go build -o build/proton cmd/main.go
+	@go build -o build/proton cli/main.go
