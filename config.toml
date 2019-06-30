@@ -1,0 +1,12 @@
+[database]
+host="localhost"
+port=6879
+user="user"
+password="password"
+database="proton"
+
+[server]
+port=8080
+
+[keys]
+jwt_signing_key="jwt_signing_key"
