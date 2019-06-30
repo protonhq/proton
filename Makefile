@@ -1,2 +1,2 @@
 build:
-	@go build cmd/main.go -o build/proton
+	@go build -o build/proton cmd/main.go
