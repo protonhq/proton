@@ -5,5 +5,7 @@ import "github.com/jinzhu/gorm"
 // Account - Account entity
 type Account struct {
 	gorm.Model
-	Email string `json:"email"`
+	Email    string `json:"email"`
+	UserName string `json:"userName"`
+	Password []byte
 }
