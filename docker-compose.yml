@@ -1,0 +1,10 @@
+version: '3'
+services:
+  proton:
+    build: .
+    ports:
+      - '8080:8080'
+    environment:
+      - SERVER_PORT=8080
+    volumes:
+      - './config.toml:/app/config.toml'
