@@ -38,3 +38,23 @@ var queryAccount = graphql.Field{
 		return res, nil
 	},
 }
+
+var createAccount = graphql.Field{
+	Type:        accountType,
+	Description: "Create new account",
+	Args: graphql.FieldConfigArgument{
+		"userName": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
+		"password": &graphql.ArgumentConfig{
+			Type: graphql.NewNonNull(graphql.String),
+		},
+	},
+	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+		name, _ := p.Args["userName"].(string)
+		res := domain.Account{
+			UserName: name,
+		}
+		return res, nil
+	},
+}
