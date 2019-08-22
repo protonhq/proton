@@ -19,13 +19,12 @@ var serveCmd = &cobra.Command{
 	Long:  `Start proton server`,
 	Run: func(cmd *cobra.Command, args []string) {
 		appConfig := config.NewConfiguration()
-		_, err := registry.NewContainer(appConfig)
-
+		appContainer, err := registry.NewContainer(appConfig)
 		if err != nil {
-			log.Error("Error on initalizing application", err)
+			log.Error("Error on initalizing application: ", err)
 		}
 
 		log.Info("Proton Server Version ", appConfig.Version)
-		http.Init(appConfig.Server.Port)
+		http.Init(appConfig, appContainer)
 	},
 }

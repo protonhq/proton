@@ -3,12 +3,13 @@ package usecase
 import (
 	"errors"
 
+	"github.com/protonhq/proton/domain"
 	"github.com/protonhq/proton/repository"
 )
 
 // AccountUsecase - account usecase
 type AccountUsecase interface {
-	RegisterUser(email string, password string) error
+	RegisterUser(email string, password string) (*domain.Account, error)
 }
 
 type accountUsecase struct {
@@ -24,15 +25,21 @@ func NewAccountUsecase(repo repository.AccountRepository) AccountUsecase {
 }
 
 // RegisterUser -  register a user
-func (a *accountUsecase) RegisterUser(email string, password string) error {
+func (a *accountUsecase) RegisterUser(email string, password string) (*domain.Account, error) {
 	acct, err := a.repo.FindByEmail(email)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if acct != nil {
-		return errors.New("Email already exist")
+		return nil, errors.New("Email already exist")
 	}
 
-	return a.repo.Create(email, password)
+	newAcct, err := a.repo.Create(email, password)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return newAcct, nil
 }
