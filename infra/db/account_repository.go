@@ -26,7 +26,7 @@ func (r *accountRepository) Create(email string, password string) (*domain.Accou
 	}
 
 	account := domain.Account{Email: email, Password: hash}
-	r.db.Create(account)
+	r.db.Create(&account)
 
 	return &account, nil
 }
@@ -52,10 +52,10 @@ func (r *accountRepository) Update(*domain.Account) error {
 }
 
 func (r *accountRepository) FindByEmail(email string) (*domain.Account, error) {
-	var accts []*domain.Account
-	r.db.Find(accts, domain.Account{Email: email})
+	var accts []domain.Account
+	r.db.Find(&accts, domain.Account{Email: email})
 	if len(accts) != 0 {
-		return accts[0], nil
+		return &accts[0], nil
 	}
 	return nil, nil
 }
