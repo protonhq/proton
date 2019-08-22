@@ -10,4 +10,5 @@ type AccountRepository interface {
 	Save(*domain.Account) error
 	Remove(id string) error
 	Update(*domain.Account) error
+	FindByEmail(email string) (*domain.Account, error)
 }
