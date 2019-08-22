@@ -2,8 +2,9 @@ package db
 
 import (
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 
+	// We are using postgres as database
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/protonhq/proton/domain"
 )
 

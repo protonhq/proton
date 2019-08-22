@@ -2,12 +2,13 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/protonhq/proton/registry"
 	"github.com/sirupsen/logrus"
 	ginlogrus "github.com/toorop/gin-logrus"
 )
 
 // NewRouter - Create Service Routes
-func NewRouter() *gin.Engine {
+func NewRouter(ctn *registry.Container) *gin.Engine {
 	router := gin.New()
 	log := logrus.New()
 
@@ -20,7 +21,7 @@ func NewRouter() *gin.Engine {
 		})
 	})
 
-	router.POST("/graphql", GraphqlHandler())
-	router.GET("/graphql", GraphqlHandler())
+	router.POST("/graphql", GraphqlHandler(ctn))
+	router.GET("/graphql", GraphqlHandler(ctn))
 	return router
 }

@@ -13,4 +13,5 @@ require (
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/viper v1.4.0
 	github.com/toorop/gin-logrus v0.0.0-20190324082946-8887861896bb
+	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
 )
