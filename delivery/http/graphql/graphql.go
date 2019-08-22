@@ -1,15 +1,15 @@
-package http
+package graphql
 
 import (
-	"github.com/protonhq/proton/delivery/http/schema"
+	"github.com/protonhq/proton/delivery/http/graphql/schema"
 	"github.com/protonhq/proton/registry"
 
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/handler"
 )
 
-// GraphqlHandler - GraphqlHandler handle graphql requests
-func GraphqlHandler(ctn *registry.Container) gin.HandlerFunc {
+// Handler - GraphqlHandler handle graphql requests
+func Handler(ctn *registry.Container) gin.HandlerFunc {
 	schema, err := schema.Schema(ctn)
 	if err != nil {
 		panic(err)
