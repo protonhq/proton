@@ -3,6 +3,7 @@ package schema
 import (
 	"github.com/graphql-go/graphql"
 	"github.com/protonhq/proton/domain"
+	"github.com/protonhq/proton/usecase"
 )
 
 var accountType = graphql.NewObject(graphql.ObjectConfig{
@@ -12,49 +13,58 @@ var accountType = graphql.NewObject(graphql.ObjectConfig{
 		"id": &graphql.Field{
 			Type: graphql.Int,
 		},
-		"userName": &graphql.Field{
+		"email": &graphql.Field{
 			Type: graphql.String,
 		},
 	},
 })
 
-var queryAccount = graphql.Field{
-	Name:        "QueryAccount",
-	Description: "Query Account",
-	Type:        graphql.NewList(accountType),
-	Args: graphql.FieldConfigArgument{
-		"id": &graphql.ArgumentConfig{
-			Type: graphql.Int,
+func queryAccount(uc usecase.AccountUsecase) graphql.Field {
+	return graphql.Field{
+		Name:        "QueryAccount",
+		Description: "Query Account",
+		Type:        graphql.NewList(accountType),
+		Args: graphql.FieldConfigArgument{
+			"id": &graphql.ArgumentConfig{
+				Type: graphql.Int,
+			},
+			"email": &graphql.ArgumentConfig{
+				Type: graphql.String,
+			},
 		},
-		"userName": &graphql.ArgumentConfig{
-			Type: graphql.String,
+		Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
+			name, _ := p.Args["email"].(string)
+			res := []domain.Account{
+				{UserName: name},
+			}
+			return res, nil
 		},
-	},
-	Resolve: func(p graphql.ResolveParams) (result interface{}, err error) {
-		name, _ := p.Args["userName"].(string)
-		res := []domain.Account{
-			{UserName: name},
-		}
-		return res, nil
-	},
+	}
 }
 
-var createAccount = graphql.Field{
-	Type:        accountType,
-	Description: "Create new account",
-	Args: graphql.FieldConfigArgument{
-		"userName": &graphql.ArgumentConfig{
-			Type: graphql.NewNonNull(graphql.String),
+func createAccount(uc usecase.AccountUsecase) graphql.Field {
+	return graphql.Field{
+		Type:        accountType,
+		Description: "Create new account",
+		Args: graphql.FieldConfigArgument{
+			"email": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
+			"password": &graphql.ArgumentConfig{
+				Type: graphql.NewNonNull(graphql.String),
+			},
 		},
-		"password": &graphql.ArgumentConfig{
-			Type: graphql.NewNonNull(graphql.String),
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			email, _ := p.Args["email"].(string)
+			password, _ := p.Args["password"].(string)
+
+			acc, err := uc.RegisterUser(email, password)
+
+			if err != nil {
+				return nil, err
+			}
+
+			return acc, nil
 		},
-	},
-	Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-		name, _ := p.Args["userName"].(string)
-		res := domain.Account{
-			UserName: name,
-		}
-		return res, nil
-	},
+	}
 }

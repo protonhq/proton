@@ -14,7 +14,7 @@ type Container struct {
 }
 
 // NewContainer - create application container
-func NewContainer(conf config.Configuration) (*Container, error) {
+func NewContainer(conf *config.Configuration) (*Container, error) {
 	builder, err := di.NewBuilder()
 	if err != nil {
 		return nil, err
