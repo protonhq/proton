@@ -1,6 +1,10 @@
 package usecase
 
-import "github.com/protonhq/proton/repository"
+import (
+	"errors"
+
+	"github.com/protonhq/proton/repository"
+)
 
 // AccountUsecase - account usecase
 type AccountUsecase interface {
@@ -21,5 +25,14 @@ func NewAccountUsecase(repo repository.AccountRepository) AccountUsecase {
 
 // RegisterUser -  register a user
 func (a *accountUsecase) RegisterUser(email string, password string) error {
+	acct, err := a.repo.FindByEmail(email)
+	if err != nil {
+		return err
+	}
+
+	if acct != nil {
+		return errors.New("Email already exist")
+	}
+
 	return a.repo.Create(email, password)
 }
