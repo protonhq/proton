@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 )
+
 // DatabaseConfiguration - Database Configuration
 type DatabaseConfiguration struct {
 	Host         string
@@ -11,6 +12,7 @@ type DatabaseConfiguration struct {
 	User         string
 	Password     string
 	DatabaseName string
+	SSLMode      string
 }
 
 // ConnectionString - Database Connection String
@@ -21,6 +23,7 @@ func (c *DatabaseConfiguration) ConnectionString() string {
 		"user=" + c.User,
 		"password=" + c.Password,
 		"dbname=" + c.DatabaseName,
+		"sslmode=" + c.SSLMode,
 	}
 	result := strings.Join(strs, " ")
 	return result

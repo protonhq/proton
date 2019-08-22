@@ -4,6 +4,7 @@ port=6879
 user="user"
 password="password"
 database="proton"
+sslmode="disable"
 
 [server]
 port=8080

@@ -1,6 +1,11 @@
 package config
 
-import "github.com/spf13/viper"
+import (
+	"strings"
+
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+)
 
 const (
 	version = "v0.0.1"
@@ -18,9 +23,13 @@ func NewConfiguration() *Configuration {
 	viper.SetConfigType("toml")
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
+	if err := viper.ReadInConfig(); err == nil {
+		log.Info("Using config file:", viper.ConfigFileUsed())
+	} else {
+		log.Info("Config file not found")
+		viper.SetEnvPrefix("PT")
+		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+		viper.AutomaticEnv()
 	}
 
 	return &Configuration{
@@ -31,6 +40,7 @@ func NewConfiguration() *Configuration {
 			User:         viper.GetString("database.user"),
 			Password:     viper.GetString("database.password"),
 			DatabaseName: viper.GetString("database.database"),
+			SSLMode:      viper.GetString("database.sslmode"),
 		},
 		Server: ServerConfiguration{
 			Port: viper.GetInt("server.port"),
