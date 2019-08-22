@@ -8,6 +8,7 @@ require (
 	github.com/graphql-go/handler v0.2.3
 	github.com/jinzhu/gorm v1.9.10
 	github.com/mitchellh/go-homedir v1.1.0
+	github.com/sarulabs/di v2.0.0+incompatible
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/cobra v0.0.5
 	github.com/spf13/viper v1.4.0

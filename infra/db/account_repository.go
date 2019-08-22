@@ -3,7 +3,7 @@ package db
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/protonhq/proton/domain"
-	"github.com/protonhq/proton/domain/repository"
+	"github.com/protonhq/proton/repository"
 )
 
 type accountRepository struct {
