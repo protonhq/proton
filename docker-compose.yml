@@ -12,6 +12,7 @@ services:
       - PT_DATABASE_PASSWORD=proton
       - PT_DATABASE_DATABASE=proton
       - PT_DATABASE_SSLMODE=disable
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; ./proton serve'
     depends_on:
       - db
   db:
