@@ -14,12 +14,12 @@ type Container struct {
 }
 
 // NewContainer - create application container
-func NewContainer(conf *config.Configuration) (*Container, error) {
+func NewContainer() (*Container, error) {
 	builder, err := di.NewBuilder()
 	if err != nil {
 		return nil, err
 	}
-
+	conf := config.NewConfiguration()
 	// Create DB
 	database, err := db.InitDB(conf.Database.ConnectionString())
 
@@ -33,6 +33,12 @@ func NewContainer(conf *config.Configuration) (*Container, error) {
 			Build: func(ctn di.Container) (interface{}, error) {
 				repo := db.NewAccountRepository(database)
 				return usecase.NewAccountUsecase(repo), nil
+			},
+		},
+		{
+			Name: "config",
+			Build: func(ctn di.Container) (interface{}, error) {
+				return conf, nil
 			},
 		},
 	}...); err != nil {

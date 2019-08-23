@@ -11,3 +11,8 @@ port=8080
 
 [keys]
 jwt_signing_key="jwt_signing_key"
+
+[pubber]
+user_agent="Proton User Agent"
+max_delivery_depth=5
+max_inbox_forwarding_depth=5

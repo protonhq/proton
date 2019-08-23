@@ -13,19 +13,22 @@ import (
 // Clock determines the time.
 type Clock struct{}
 
+// Now determines server time
 func (c *Clock) Now() time.Time {
 	return time.Now()
 }
 
-// HttpClient sends http requests.
-type HttpClient struct{}
+// HTTPClient sends http requests.
+type HTTPClient struct{}
 
-func (m *HttpClient) Do(req *http.Request) (*http.Response, error) {
+// Do a request
+func (m *HTTPClient) Do(req *http.Request) (*http.Response, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	return resp, err
 }
 
+// CreatePubber - create activitypub pubber
 func CreatePubber() (pub.Pubber, pub.HandlerFunc) {
 	// pub.Clock
 	clock := &Clock{}
@@ -40,12 +43,12 @@ func CreatePubber() (pub.Pubber, pub.HandlerFunc) {
 	// pub.Deliverer
 	deliverer := createDeliverer()
 
-	// pub.HttpClient
-	httpClient := &HttpClient{}
+	// pub.HTTPClient
+	httpClient := &HTTPClient{}
 
-	userAgent := viper.GetString("pubber.userAgent")
-	maxDeliveryDepth := viper.GetInt("pubber.maxDeliveryDepth")
-	maxInboxForwardingDepth := viper.GetInt("pubber.maxInboxForwardingDepth")
+	userAgent := viper.GetString("pubber.user_agent")
+	maxDeliveryDepth := viper.GetInt("pubber.max_delivery_depth")
+	maxInboxForwardingDepth := viper.GetInt("pubber.max_inbox_forwarding_depth")
 
 	pubber := pub.NewPubber(clock, app, socialCallbacker, federatedCallbacker, deliverer, httpClient, userAgent, maxDeliveryDepth, maxInboxForwardingDepth)
 	asHandler := pub.ServeActivityPubObject(app, clock)

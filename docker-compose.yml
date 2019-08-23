@@ -12,7 +12,9 @@ services:
       - PT_DATABASE_PASSWORD=proton
       - PT_DATABASE_DATABASE=proton
       - PT_DATABASE_SSLMODE=disable
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; ./proton serve'
+      - PT_PUBBER_USER_AGENT=Proton
+      - PT_PUBBER_MAX_DELIVERY_DEPTH=5
+      - PT_PUBBER_MAX_INBOX_FORWARDING_DEPTH=5
     depends_on:
       - db
   db:
