@@ -16,6 +16,7 @@ type Configuration struct {
 	Version  string
 	Database DatabaseConfiguration
 	Server   ServerConfiguration
+	Pubber   PubberConfiguration
 }
 
 // NewConfiguration - Read Application Configuration
@@ -44,6 +45,11 @@ func NewConfiguration() *Configuration {
 		},
 		Server: ServerConfiguration{
 			Port: viper.GetInt("server.port"),
+		},
+		Pubber: PubberConfiguration{
+			UserAgent:               viper.GetString("pubber.user_agent"),
+			MaxDeliveryDepth:        viper.GetInt("pubber.max_delivery_depth"),
+			MaxInboxForwardingDepth: viper.GetInt("pubber.max_inbox_forwarding_depth"),
 		},
 	}
 }

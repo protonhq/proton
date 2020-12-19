@@ -2,6 +2,7 @@ package http
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/protonhq/proton/delivery/http/graphql"
 	"github.com/protonhq/proton/registry"
 	"github.com/sirupsen/logrus"
 	ginlogrus "github.com/toorop/gin-logrus"
@@ -21,7 +22,7 @@ func NewRouter(ctn *registry.Container) *gin.Engine {
 		})
 	})
 
-	router.POST("/graphql", GraphqlHandler(ctn))
-	router.GET("/graphql", GraphqlHandler(ctn))
+	router.POST("/graphql", graphql.Handler(ctn))
+	router.GET("/graphql", graphql.Handler(ctn))
 	return router
 }

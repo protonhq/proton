@@ -8,10 +8,9 @@ import (
 )
 
 // Init - Initalize HTTP Server
-func Init(conf *config.Configuration, ctn *registry.Container) {
+func Init(ctn *registry.Container) {
 	r := NewRouter(ctn)
-
-	portStr := fmt.Sprintf(":%d", conf.Server.Port)
-
+	appConfig := ctn.Resolve("config").(*config.Configuration)
+	portStr := fmt.Sprintf(":%d", appConfig.Server.Port)
 	r.Run(portStr)
 }
